@@ -22,26 +22,24 @@ public class PasswordChecker {
         if (length == 0 || repeats == 0) {
             throw new IllegalStateException("Не установлены параметры на чекера");
         }
-        int count = 0;
-        boolean isRepeats = false;
-        boolean isLength = false;
-        for (int i = 0; i < password.length(); i++) {
-            for (int j = i + 1; j < password.length(); j++) {
-                if (password.charAt(i) == password.charAt(j)) {
-                    count++;
-                } else {
-                    break;
-                }
-            }
-            if (count >= repeats) {
-                isRepeats = true;
-            } else {
-                count = 0;
-            }
-        }
+
         if (password.length() < length) {
-            isLength = true;
+            return false;
         }
-        return !isLength && !isRepeats;
+
+        int count = 0;
+        char previousChar = password.charAt(0);
+        for (char passwordChar : password.toCharArray()) {
+            if (passwordChar == previousChar) {
+                count ++;
+                if (count > repeats) {
+                    return false;
+                }
+            } else {
+                count = 1;
+                previousChar = passwordChar;
+            }
+        }
+        return true;
     }
 }
