@@ -7,13 +7,13 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ToDoList toDoList = new ToDoList();
 
-        while (true){
+        while (true) {
             System.out.println("Выберите операцию: \n");
             System.out.println("0. Выход из программы\n" +
                     "1. Добавить дело\n" +
                     "2. Показать дела\n" +
                     "3. Удалить дело по номеру\n" +
-                    "4. Удалить дело по названию\n"+
+                    "4. Удалить дело по названию\n" +
                     "5. Удалить дело по ключевому слову\n");
             System.out.print("Введите операцию: ");
             int choice = scanner.nextInt();
@@ -23,9 +23,8 @@ public class Main {
                     System.exit(0);
                 case 1:
                     System.out.print("Введите название задачи: ");
-                    if (scanner.hasNext()){
-                        String s = scanner.nextLine();
-                        toDoList.add(s);
+                    if (scanner.hasNext()) {
+                        toDoList.add(scanner.nextLine());
                     }
                     break;
                 case 2:
@@ -33,15 +32,21 @@ public class Main {
                     break;
                 case 3:
                     System.out.print("Введите номер для удаления: ");
-                    toDoList.delete(scanner.nextInt());
+                    if (!toDoList.delete(scanner.nextInt())){
+                        System.err.println("Задачи с таким номером не существет");
+                    }
                     break;
                 case 4:
                     System.out.print("Введите точное название задачи: ");
-                    toDoList.deleteEquals(scanner.nextLine());
+                    if(!toDoList.deleteEquals(scanner.nextLine())){
+                        System.err.println("Задачи с таким именем не существует");
+                    }
                     break;
                 case 5:
                     System.out.print("Введите ключевое слово для удаления: ");
-                    toDoList.deleteContains(scanner.nextLine());
+                    if(!toDoList.deleteContains(scanner.nextLine())){
+                        System.err.println("Нет совпадений");
+                    }
                     break;
                 default:
                     System.out.println("Некорректный выбор, попробуйте снова");
@@ -52,34 +57,39 @@ public class Main {
     public static class ToDoList {
         List<String> list = new ArrayList<>();
 
-        public boolean add(String s) {
-            return list.add(s);
+        public boolean add(String task) {
+            return list.add(task);
         }
 
         public void show() {
             int count = 0;
-            for (String s : list) {
+            for (String task : list) {
                 count++;
-                System.out.println(count + ". " + s);
+                System.out.println(count + ". " + task);
             }
         }
 
-        public void delete(int number) {
-            list.remove(number - 1);
+        public boolean delete(int number) {
+            try {
+                list.remove(number - 1);
+                return true;
+            } catch (IndexOutOfBoundsException e) {
+                return false;
+            }
         }
 
-        public void deleteEquals(String s) {
-            list.remove(s);
+        public boolean deleteEquals(String task) {
+            return list.remove(task);
         }
 
-        public void deleteContains(String s) {
+        public boolean deleteContains(String task) {
             List<String> removeList = new ArrayList<>();
-            for (String str : list) {
-                if (str.contains(s)){
-                    removeList.add(str);
+            for (String taskFromList : list) {
+                if (taskFromList.contains(task)) {
+                    removeList.add(taskFromList);
                 }
             }
-            list.removeAll(removeList);
+            return list.removeAll(removeList);
         }
     }
 }
