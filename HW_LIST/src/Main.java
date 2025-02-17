@@ -55,41 +55,41 @@ public class Main {
     }
 
     public static class ToDoList {
-        List<String> list = new ArrayList<>();
+        List<String> taskList = new ArrayList<>();
 
         public boolean add(String task) {
-            return list.add(task);
+            return taskList.add(task);
         }
 
         public void show() {
             int count = 0;
-            for (String task : list) {
+            for (String task : taskList) {
                 count++;
                 System.out.println(count + ". " + task);
             }
         }
 
         public boolean delete(int number) {
-            try {
-                list.remove(number - 1);
-                return true;
-            } catch (IndexOutOfBoundsException e) {
+            if (taskList.size() < number) {
                 return false;
+            } else {
+                taskList.remove(number - 1);
+                return true;
             }
         }
 
         public boolean deleteEquals(String task) {
-            return list.remove(task);
+            return taskList.remove(task);
         }
 
         public boolean deleteContains(String task) {
             List<String> removeList = new ArrayList<>();
-            for (String taskFromList : list) {
+            for (String taskFromList : taskList) {
                 if (taskFromList.contains(task)) {
                     removeList.add(taskFromList);
                 }
             }
-            return list.removeAll(removeList);
+            return taskList.removeAll(removeList);
         }
     }
 }
