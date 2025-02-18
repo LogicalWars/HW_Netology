@@ -2,20 +2,13 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Address address1 = new Address("Russia", "Moscow");
-        Address address2 = new Address("Russia", "Ufa");
-        Address address3 = new Address("Russia", "Saratov");
-        Address address4 = new Address("Belarus", "Minsk");
-        Address address5 = new Address("Japan", "Tokyo");
-        Address address6 = new Address("China", "Pekin");
-
         Map<Address, Integer> costPerAddress = new HashMap<>();
-        costPerAddress.put(address1, 20);
-        costPerAddress.put(address2, 100);
-        costPerAddress.put(address3, 200);
-        costPerAddress.put(address4, 1000);
-        costPerAddress.put(address5, 2500);
-        costPerAddress.put(address6, 3000);
+        costPerAddress.put(new Address("Russia", "Moscow"), 20);
+        costPerAddress.put(new Address("Russia", "Ufa"), 100);
+        costPerAddress.put(new Address("Russia", "Saratov"), 200);
+        costPerAddress.put(new Address("Belarus", "Minsk"), 1000);
+        costPerAddress.put(new Address("Japan", "Tokyo"), 2500);
+        costPerAddress.put(new Address("China", "Pekin"), 3000);
 
         Scanner scanner = new Scanner(System.in);
         int cost;
